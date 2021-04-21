@@ -64,5 +64,6 @@ int main() {
 	hash_deallocate(&hash_table);
 
 	_CrtDumpMemoryLeaks();
-	return;
+
+	return 1;
 }
