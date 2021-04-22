@@ -7,6 +7,15 @@
 
 #include "hash_table.h" //contains hash table methdos.
 
+/*
+search for bugs, which causes crashes
+implement rehash ability
+implement sorting of linked list
+prevent adding 2 items with same key. currnetly jsut adds 2 items
+example use
+
+*/
+
 
 int main() {
 	
@@ -39,7 +48,7 @@ int main() {
 	int value12 = 0;
 	int value13 = 42;
 
-	hash_table* hash_table = hash_table_init(20);
+	hash_table* hash_table = hash_table_init(5, hash_func_poly);
 
 	hash_add_item(&hash_table, s1, &value1);
 	hash_add_item(&hash_table, s2, &value2);
@@ -57,10 +66,12 @@ int main() {
 	
 	hash_print_table(&hash_table);
 
-	hash_remove_item(&hash_table, s10);
+	hash_rehash(&hash_table, 20, hash_func_poly);
+
+	hash_remove_item(&hash_table, s4);
 
 	hash_print_table(&hash_table);
-
+	
 	hash_deallocate(&hash_table);
 
 	_CrtDumpMemoryLeaks();
