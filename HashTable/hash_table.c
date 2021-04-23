@@ -23,7 +23,6 @@
 *
 */
 
-#include "linked_list.h"
 #include "hash_table.h"
 
 long long hash_func_poly(char* key) {

@@ -1,0 +1,1 @@
+clang -Wall -Werror -o main.exe main.c HashTable\hash_table.c LinkedList\linked_list.c

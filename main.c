@@ -5,7 +5,8 @@
 
 
 #include <crtdbg.h> //used to detect memory leaks
-#include "hash_table.h" //contains hash table methdos.
+//#include "hash_table.h" //contains hash table methdos.
+#include "main.h"
 
 int main() {
 	

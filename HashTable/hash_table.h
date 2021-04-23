@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "..\LinkedList\linked_list.h"
 
 typedef long long (*hash_func)(char* key);
 
