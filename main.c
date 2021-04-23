@@ -3,23 +3,12 @@
 //#include <stdio.h>
 //#include <stdlib.h>
 
+
 #include <crtdbg.h> //used to detect memory leaks
-
 #include "hash_table.h" //contains hash table methdos.
-
-/*
-search for bugs, which causes crashes
-implement rehash ability
-implement sorting of linked list
-prevent adding 2 items with same key. currnetly jsut adds 2 items
-example use
-
-*/
-
 
 int main() {
 	
-
 	char s1[] = "Sarah";
 	char s2[] = "Jessie";
 	char s3[] = "Olga";
@@ -48,16 +37,20 @@ int main() {
 	int value12 = 0;
 	int value13 = 42;
 
-	hash_table* hash_table = hash_table_init(5, hash_func_poly);
+	//hash_table* hash_table = hash_table_manu_init(5, hash_func_poly);
+
+	hash_table* hash_table = hash_table_auto_init(7, hash_func_poly, 0.75, 0.5);
 
 	hash_add_item(&hash_table, s1, &value1);
 	hash_add_item(&hash_table, s2, &value2);
 	hash_add_item(&hash_table, s3, &value3);
 	hash_add_item(&hash_table, s4, &value4);
 	hash_add_item(&hash_table, s5, &value5);
+
 	hash_add_item(&hash_table, s6, &value6);
 	hash_add_item(&hash_table, s7, &value7);
 	hash_add_item(&hash_table, s8, &value8);
+	hash_print_table(&hash_table);
 	hash_add_item(&hash_table, s9, &value9);
 	hash_add_item(&hash_table, s10, &value10);
 	hash_add_item(&hash_table, s11, &value11);
@@ -66,11 +59,7 @@ int main() {
 	
 	hash_print_table(&hash_table);
 
-	hash_rehash(&hash_table, 20, hash_func_poly);
-
-	hash_remove_item(&hash_table, s4);
-
-	hash_print_table(&hash_table);
+	printf("%d\n", hash_table->table_size);
 	
 	hash_deallocate(&hash_table);
 

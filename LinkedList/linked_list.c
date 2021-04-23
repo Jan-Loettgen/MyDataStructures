@@ -24,9 +24,8 @@
 */
 
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "linked_list.h"
+
 
 entry* ll_entry_create(char* key, const void* item_ptr) {
 	entry* ptr = malloc(sizeof(entry));
@@ -63,6 +62,8 @@ node* ll_create_node(char* key, const void* item_ptr) {
 
 	ptr->entry_ptr = entry_ptr;
 	ptr->next_ptr = NULL;
+
+	return ptr;
 }
 
 void ll_destroy_node(node* node_ptr) {
@@ -149,4 +150,10 @@ void ll_print_keys(node** root) {
 		curr = curr->next_ptr;
 	}
 	printf("%s", "\n");
+}
+
+void ll_update_node(node** root, char* key, const void* new_item_ptr) {
+	node* node = ll_search_list(root, key);
+	node->entry_ptr->item_ptr = new_item_ptr;
+
 }

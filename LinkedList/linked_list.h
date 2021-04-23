@@ -2,6 +2,9 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 struct entry {
 	char* key;
 	const void* item_ptr;
@@ -39,5 +42,7 @@ void ll_remove_element(node** root, char* key);
 node* ll_search_list(node** root, char* key);
 
 void ll_print_keys(node** root);
+
+void ll_update_node(node** root, char* key, const void* new_item_ptr);
 
 #endif
