@@ -8,7 +8,7 @@
 //#include "hash_table.h" //contains hash table methdos.
 #include "main.h"
 
-int main() {
+int main1() {
 	
 	char s1[] = "Sarah";
 	char s2[] = "Jessie";
