@@ -3,7 +3,7 @@
 #include "queueFIFO.h"
 #include <stdio.h>
 
-queue* queue_create(int size){
+queue* queue_FIFO_create(int size){
 
 	queue* queue = malloc(sizeof(queue));
 	
@@ -19,7 +19,7 @@ queue* queue_create(int size){
     }
 }
 
-int queue_add(queue** queue, const void* item) {
+int queue_FIFO_add(queue** queue, const void* item) {
 
 	if (*queue != NULL && (*queue)->num_stored < (*queue)->size) {
 
@@ -54,13 +54,11 @@ int queue_add(queue** queue, const void* item) {
 	}
 }
 
-const void* queue_pop(queue** queue){
-
-	q_element* return_qlem;
+const void* queue_FIFO_pop(queue** queue){
 
 	if ((*queue) != NULL && (*queue)->head !=NULL){
 		
-		return_qlem = (*queue)->head;
+		q_element* return_elem = (*queue)->head;
 
 		if ((*queue)->head->next_element == (*queue)->tail){
 			(*queue)->tail = NULL;
@@ -68,7 +66,7 @@ const void* queue_pop(queue** queue){
 		(*queue)->head = (*queue)->head->next_element;
 		(*queue)->num_stored--;
 
-		return return_qlem->value;
+		return return_elem->value;
 	}
 	else {
 		return NULL;
