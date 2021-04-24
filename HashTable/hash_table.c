@@ -7,7 +7,7 @@
 *
 ******************************Purpose*****************************
 *
-* The functiosn within this program in combination with the generic
+* The functions within this program in combination with the generic
 * linked list functions make up a generic hash table.
 *
 *
