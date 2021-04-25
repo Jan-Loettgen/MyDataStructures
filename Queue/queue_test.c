@@ -6,6 +6,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+void deallocate(queue** q, int queue_type){
+
+    if (queue_type == 1){
+        queue_FIFO_destroy(q);
+    }
+    else {
+        queue_FILO_destroy(q);
+    };
+}
+
 void print_options1(){
     printf("\n Enter 1 for First in First out queue");
     printf("\n Enter 2 for First in Last out queue");
@@ -25,7 +35,7 @@ void print_options3(){
 int main(){
     
     system("cls");
-    queue* queue = NULL;
+    queue* q = NULL;
     char buffer[1024];
     char* str;
     int queue_type = 0;
@@ -38,7 +48,7 @@ int main(){
             break;
         }
         else{
-            printf("please enter 1, 2 or 3: ");
+            printf(" please enter 1, 2 or 3: ");
         }
     }
 
@@ -54,13 +64,13 @@ int main(){
     }
 
     if (queue_type == 1) {
-        queue = queue_FIFO_create(queue_size);
+        q = queue_FIFO_create(queue_size);
 
     } else if (queue_type == 2){
-        queue = queue_FILO_create(queue_size);
+        q = queue_FILO_create(queue_size);
     }
 
-    if (queue  == NULL){
+    if (q  == NULL){
         printf("unable to create queue \n");
         return -1;
     }
@@ -76,28 +86,30 @@ int main(){
             strncpy_s(str, 1024, buffer, 1024);
 
             if(queue_type == 1){
-                queue_FIFO_add(&queue, str);
+                queue_FIFO_add(&q, str);
                 printf("%s\n", str);
             }
             else {
-                queue_FILO_add(&queue, str);
+                queue_FILO_add(&q, str);
                 printf("%s\n", str);
             }
             system("cls");
         }
         else if(atoi(buffer) == 2){
             if(queue_type == 1){
-                char* str_ptr = (char *)queue_FIFO_pop(&queue);
+                char* str_ptr = (char *)queue_FIFO_pop(&q);
                 system("cls");
                 if (str_ptr != NULL) {printf("Retrived item: %s", str_ptr);}
             }
             else {
-                char* str_ptr = (char *)queue_FILO_pop(&queue);
+                char* str_ptr = (char *)queue_FILO_pop(&q);
                 system("cls");
                 if (str_ptr != NULL) {printf("Retrived item: %s", str_ptr);}
             }
         }
-        else if(atoi(buffer) == 3){ return 0; }
+        else if(atoi(buffer) == 3){
+            deallocate(&q, queue_type);
+             return 0; }
 
         print_options3();
     }

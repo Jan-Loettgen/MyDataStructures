@@ -5,32 +5,31 @@
 
 queue* queue_FILO_create(int size){
 
-	queue* queue = malloc(sizeof(queue));
+	queue* q = malloc(sizeof(queue));
 	
-	if (queue  != NULL)  {
-        queue->head = NULL;
-        queue->tail = NULL;
-        queue->size = size;
-        queue->num_stored = 0;
-        return queue;
+	if (q  != NULL)  {
+        q->head = NULL;
+        q->tail = NULL;
+        q->size = size;
+        q->num_stored = 0;
+        return q;
 	}
     else {
         return NULL;
     }
 }
 
-int queue_FILO_add(queue** queue, const void* item) {
+int queue_FILO_add(queue** q, const void* item) {
 
-	if (*queue != NULL && (*queue)->num_stored < (*queue)->size) {
+	if (*q != NULL) {
 
-		q_element* elem = malloc(sizeof(q_element));
+		q_element* elem = malloc(sizeof(struct q_element));
 
-		if (elem != NULL) {
+		if (elem != NULL && (*q)->num_stored < (*q)->size) {
 			elem->value = item;
-
-            elem->next_element = (*queue)->tail;
-            (*queue)->tail = elem;
-            (*queue)->num_stored++;
+			elem->next_element = (*q)->tail;
+			(*q)->tail = elem;
+			(*q)->num_stored++;
 			return 1;
 		}
 		else {
@@ -42,16 +41,44 @@ int queue_FILO_add(queue** queue, const void* item) {
 	}
 }
 
-const void* queue_FILO_pop(queue** queue){
+const void* queue_FILO_pop(queue** q) {
 
-	if ((*queue) != NULL && (*queue)->tail !=NULL){
+	if ((*q) != NULL && (*q)->tail != NULL) {
 
-        q_element* return_qlem = (*queue)->tail;
-        (*queue)->tail = (*queue)->tail->next_element;
-		(*queue)->num_stored--;
-		return return_qlem->value;
+		const void* return_item;
+		q_element* destroy_elem;
+
+		return_item = (*q)->tail->value;
+		destroy_elem = (*q)->tail;
+
+		(*q)->tail = (*q)->tail->next_element;
+		(*q)->num_stored--;
+
+		free(destroy_elem);
+
+		return return_item;
 	}
 	else {
 		return NULL;
 	}
+}
+
+int queue_FILO_destroy(queue** q) {
+
+	if (*q == NULL) { return 0; } //handles case where queue is null.
+
+	if ((*q)->tail == NULL) { //queue exits but is empty.
+		free(*q);
+		return 1;
+	}
+
+	q_element* curr = (*q)->tail;
+
+	while (curr != NULL) {
+		q_element* aux_elem = curr;
+		curr = curr->next_element;
+		free(aux_elem);
+	}
+	free(*q);
+	return 1;
 }

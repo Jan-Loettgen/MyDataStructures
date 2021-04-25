@@ -3,25 +3,25 @@
 #include "queueFIFO.h"
 #include <stdio.h>
 
-queue* queue_FIFO_create(int size){
+queue* queue_FIFO_create(int size) {
 
-	queue* queue = malloc(sizeof(queue));
-	
-	if (queue  != NULL)  {
-        queue->head = NULL;
-        queue->tail = NULL;
-        queue->size = size;
-        queue->num_stored = 0;
-        return queue;
+	queue* q = malloc(sizeof(queue));
+
+	if (q != NULL) {
+		q->head = NULL;
+		q->tail = NULL;
+		q->size = size;
+		q->num_stored = 0;
+		return q;
 	}
-    else {
-        return NULL;
-    }
+	else {
+		return NULL;
+	}
 }
 
-int queue_FIFO_add(queue** queue, const void* item) {
+int queue_FIFO_add(queue** q, const void* item) {
 
-	if (*queue != NULL && (*queue)->num_stored < (*queue)->size) {
+	if (*q != NULL && (*q)->num_stored < (*q)->size) {
 
 		q_element* elem = malloc(sizeof(q_element));
 
@@ -29,19 +29,19 @@ int queue_FIFO_add(queue** queue, const void* item) {
 			elem->value = item;
 			elem->next_element = NULL;
 
-			if ((*queue)->head == NULL){
-				(*queue)->head = elem;
-				(*queue)->num_stored++;
+			if ((*q)->head == NULL) {
+				(*q)->head = elem;
+				(*q)->num_stored++;
 			}
-			else if((*queue)->tail == NULL){
-				(*queue)->tail = elem;
-				(*queue)->head->next_element = elem;
-				(*queue)->num_stored++;
-			}	
+			else if ((*q)->tail == NULL) {
+				(*q)->tail = elem;
+				(*q)->head->next_element = elem;
+				(*q)->num_stored++;
+			}
 			else {
-				(*queue)->tail->next_element = elem;
-				(*queue)->tail = elem;
-				(*queue)->num_stored++;
+				(*q)->tail->next_element = elem;
+				(*q)->tail = elem;
+				(*q)->num_stored++;
 			}
 			return 1;
 		}
@@ -54,21 +54,51 @@ int queue_FIFO_add(queue** queue, const void* item) {
 	}
 }
 
-const void* queue_FIFO_pop(queue** queue){
+const void* queue_FIFO_pop(queue** q) {
 
-	if ((*queue) != NULL && (*queue)->head !=NULL){
-		
-		q_element* return_elem = (*queue)->head;
+	if ((*q) != NULL && (*q)->head != NULL) {
 
-		if ((*queue)->head->next_element == (*queue)->tail){
-			(*queue)->tail = NULL;
+		q_element* destroy_elem = (*q)->head;
+		void const* return_value = (*q)->head->value;
+
+		if ((*q)->head->next_element == (*q)->tail) {
+			(*q)->tail = NULL;
 		}
-		(*queue)->head = (*queue)->head->next_element;
-		(*queue)->num_stored--;
+		(*q)->head = (*q)->head->next_element;
+		(*q)->num_stored--;
 
-		return return_elem->value;
+		free(destroy_elem);
+
+		return return_value;
 	}
 	else {
 		return NULL;
 	}
+}
+
+int queue_FIFO_destroy(queue** q){
+
+	if (*q == NULL){ return 0; } //handles case where queue is null.
+
+	if ((*q)->head == NULL) { //queue exits but is empty.
+		free(*q);
+	}
+
+	if ((*q)->tail == NULL){//queue has head but no tail - 1 person in queue. 
+		free((*q)->head);
+		free((*q));
+		return 1;
+	}
+
+	q_element* curr = (*q)->head;
+
+	while (curr != (*q)->tail){
+		q_element* aux_elem = curr;
+		curr = curr->next_element;
+		free(aux_elem);
+	}
+	free(curr);
+	free(*q);
+	q = NULL;
+	return 1;
 }

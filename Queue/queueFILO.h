@@ -17,14 +17,15 @@ typedef struct queue queue;
 
 #endif
 
-
 #ifndef QUEUE_FILO_H
 #define QUEUE_FILO_H
 
 queue* queue_FILO_create(int size);
 
-int queue_FILO_add(queue** queue, const void* item);
+int queue_FILO_add(queue** q, const void* item);
 
-const void* queue_FILO_pop(queue** queue);
+const void* queue_FILO_pop(queue** q);
+
+int queue_FIFO_destroy(queue** q);
 
 #endif

@@ -22,8 +22,10 @@ typedef struct queue queue;
 
 queue* queue_FIFO_create(int size);
 
-int queue_FIFO_add(queue** queue, const void* item);
+int queue_FIFO_add(queue** q, const void* item);
 
-const void* queue_FIFO_pop(queue** queue);
+const void* queue_FIFO_pop(queue** q);
+
+int queue_FILO_destroy(queue** q);
 
 #endif
