@@ -1,3 +1,22 @@
+/*
+**********************Author information*************************
+*
+* Author: Jan Luca Loettgen
+* Created: 25/04/2021
+* Date last edited: 26/04/2021
+*
+******************************Purpose*****************************
+*
+* Simple first in last out queue, which can store a pointer to 
+* any datatype or to a function.
+*
+*******************************Summary*****************************
+*
+* To create the queue the maximum size of the queue must be specfied.
+* Once the queue is created elements can be added and removed using
+* queue_FILO_add and queue_FILO_pop. After finished using queue call
+* queue_FIFO_destroy to deallocate all dynamic memory.
+*/
 
 #include <stdlib.h>
 #include <stdio.h>
